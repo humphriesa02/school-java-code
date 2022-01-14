@@ -2,27 +2,28 @@ package humphries.hwone;
 
 import java.util.Arrays;
 
-public class MySet {
+public class MySet<T> {
     /**
      * Variable Fields
      */
-    public static Object[] set;
+    public T[] set;
     public static int sizeOfCollection = 0;
 
     /**
      * Constructor with an array size parameter
      * @param sizeOfCollection
      */
+
     public MySet(int sizeOfCollection){
         this.sizeOfCollection = sizeOfCollection;
-        this.set = new Object[sizeOfCollection];
+        this.set = (T[]) new Object[sizeOfCollection];
     }
 
     /**
      * Default constructor
      */
     public MySet(){
-        this.set = new Object[sizeOfCollection];
+        this.set = (T[]) new Object[sizeOfCollection];
     }
 
     /**
@@ -41,18 +42,19 @@ public class MySet {
      * then sets 'set' to the temp array.
      * @param x
      */
-    public void add(Object x){
+    @SuppressWarnings("Unchecked")
+    public void add(T x){
         sizeOfCollection++;
         if(set.length > 0){
             for (int i = 0; i < set.length-1; i++) {
                 if(set[i].equals(x))
                     return;
             }
-            Object[] tempArray = Arrays.copyOf(set, sizeOfCollection);
+            T[] tempArray = Arrays.copyOf(set, sizeOfCollection);
             tempArray[tempArray.length-1] = x;
             set = tempArray;
         }else{
-            set = new Object[1];
+            set = (T[]) new Object[1];
             set[0] = x;
         }
 
@@ -74,7 +76,7 @@ public class MySet {
      * array with no elements
      */
     public void makeEmpty(){
-        set = new Object[0];
+        set = (T[]) new Object[0];
     }
 
     /**
@@ -102,9 +104,10 @@ public class MySet {
      * @param insert
      * @param index
      */
-    public void insert(Object insert, int index){
+    @SuppressWarnings("Unchecked")
+    public void insert(T insert, int index){
         sizeOfCollection++;
-        Object[] tempArray = new Object[sizeOfCollection];
+        T[] tempArray = (T[]) new Object[sizeOfCollection];
         for (int i = 0, j = 0; i <set.length; i++, j++) {
             if(i == index){
                 tempArray[j] = insert;
@@ -125,9 +128,9 @@ public class MySet {
      * without the found object.
      * @param x
      */
-    public void remove(Object x){
+    public void remove(T x){
         sizeOfCollection--;
-        Object[] tempArray = new Object[sizeOfCollection];
+        T[] tempArray = (T[]) new Object[sizeOfCollection];
         for (int i = 0, k = 0; i < set.length; i++) {
             if(set[i].equals(x)){
                 continue;
@@ -143,7 +146,7 @@ public class MySet {
      * @param x
      * @return
      */
-    public boolean isPresent(Object x){
+    public boolean isPresent(T x){
         for (int i = 0; i < set.length; i++){
             if(set[i].equals(x))
                 return true;
@@ -160,9 +163,29 @@ public class MySet {
         return Arrays.toString(set);
     }
 
-    public void test(){
-        isEmpty();
-        Object[] newSet = set;
-        //makeEmpty(newSet);
+    public void test() {
+        MySet<String> stringMySet = new MySet<>();
+        stringMySet.add("Hello");
+        stringMySet.insert("Hi", 0);
+        stringMySet.add("Hello");
+        stringMySet.add("Hell");
+        stringMySet.add("Hel");
+        stringMySet.add("He");
+        stringMySet.add("H");
+        System.out.println("Test set: " + stringMySet);
+        stringMySet.remove("Hi");
+        System.out.println("Removed set: " + stringMySet);
+        System.out.println("Size of set: " + stringMySet.size());
+        System.out.println("Check if Hi is present: " + stringMySet.isPresent("Hi"));
+        stringMySet.makeEmpty();
+        System.out.println("Made empty: " + stringMySet);
+
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        MySet mySet = new MySet();
+        mySet.test();
     }
 }
