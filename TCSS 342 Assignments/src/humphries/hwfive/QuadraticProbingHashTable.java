@@ -1,3 +1,5 @@
+package humphries.hwfive;
+
 import java.lang.Comparable;
 
 // QuadraticProbingHashTable abstract class
@@ -42,9 +44,10 @@ public class QuadraticProbingHashTable {
     public void insert( Hashable x ) {
         // Insert x as active
         int currentPos = findPos( x );
-        if( isActive( currentPos ) )
+        if( isActive( currentPos ) ){
+            array[currentPos].frequency++;
             return;
-
+        }
         array[ currentPos ] = new HashEntry( x, true );
 
         // Rehash; see Section 5.5

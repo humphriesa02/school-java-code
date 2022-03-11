@@ -1,3 +1,5 @@
+package humphries.hwfive;
+
 import java.lang.Comparable;
 
 /**

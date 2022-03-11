@@ -1,8 +1,10 @@
+package humphries.hwfive;
 // Basic node stored in AVL trees
 // Note that this class is not accessible outside
 // of package DataStructures
 
 class AvlNode {
+
     // Constructors
     AvlNode( Comparable theElement ) {
         this( theElement, null, null );
@@ -13,6 +15,7 @@ class AvlNode {
         left     = lt;
         right    = rt;
         height   = 0;
+        frequency= 1;
     }
 
     // Friendly data; accessible by other package routines
@@ -20,4 +23,5 @@ class AvlNode {
     AvlNode    left;         // Left child
     AvlNode    right;        // Right child
     int        height;       // Height
+    int        frequency;    // Frequency of node
 }

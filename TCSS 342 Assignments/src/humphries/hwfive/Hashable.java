@@ -1,3 +1,5 @@
+package humphries.hwfive;
+
 /**
  * Protocol for Hashable objects.
  * @author Mark Allen Weiss

@@ -1,4 +1,9 @@
+package humphries.hwfive;
+
 import java.lang.Comparable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 // AvlTree class
 //
@@ -24,12 +29,12 @@ public class AvlTree {
     /** The tree root. */
     private AvlNode root;
 
+
+
     /**
      * Construct the tree.
      */
-    public AvlTree( ) {
-        root = null;
-    }
+    public AvlTree( ) { root = null;}
 
     /**
      * Insert into the tree; duplicates are ignored.
@@ -130,7 +135,8 @@ public class AvlTree {
                 else
                     t = doubleWithRightChild( t );
         } else {
-            ;  // Duplicate; do nothing
+            ;  // Duplicate; frequencyCount increased
+            t.frequency++;
         }
         t.height = max( height( t.left ), height( t.right ) ) + 1;
         return t;
@@ -278,7 +284,53 @@ public class AvlTree {
      * along with their frequency.
      */
     public void PrintMostFrequent() {
-        System.out.println("PrintMostFrequent: Not implemented yet.");
+        // New arraylist
+        ArrayList<AvlNode> avlNodeArrayList = new ArrayList<>();
+        //GetMostFrequent method call on root and arraylist
+        GetMostFrequent(root,avlNodeArrayList);
+        System.out.println("The top 10 most frequent words are: \n");
+        //Loops through the arraylist printing out each word and it's frequency
+        for (AvlNode node :
+                avlNodeArrayList) {
+            System.out.println(node.element + " (" + node.frequency + " times),");
+        }
+    }
+
+    /**
+     * Iterate through the AVL tree and finds the
+     * nodes with the highest count.
+     */
+    public void GetMostFrequent(AvlNode node, ArrayList<AvlNode> topTen){
+        //Check if node is null
+        if(node == null)
+            return;
+        //check if arraylist is empty
+        if(topTen.isEmpty())
+            topTen.add(node);
+        else{
+            //loops through arraylist
+            for(int i = 0; i < topTen.size(); i++){
+                //Check if node frequency is greater than arraylist(i) frequency
+                if(node.frequency > topTen.get(i).frequency){
+                    //Adds the node at i
+                    topTen.add(i, node);
+                    break;
+                }
+                //This check is to see if i is at the end and
+                // the arraylist is not of size 10
+                else if(i == topTen.size()-1 && topTen.size() != 10){
+                    topTen.add(node);
+                    break;
+                }
+            }
+        }
+        //See if our insert made the arraylist size go to higher
+        //than 10, if yes then remove the last node
+        if(topTen.size() > 10){
+            topTen.remove(topTen.size()-1);
+        }
+        GetMostFrequent(node.left, topTen);
+        GetMostFrequent(node.right, topTen);
     }
     
     
@@ -292,6 +344,39 @@ public class AvlTree {
         avltree.insert(new MyString("Acropolis"));
         avltree.insert(new MyString("ZZZZZZYY"));
         avltree.printTreeDepth(avltree.root, 0);
+    }
+    public static void frequencyTest(){
+        AvlTree avltree = new AvlTree();
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("weird"));
+        avltree.insert(new MyString("sad"));
+        avltree.insert(new MyString("Acropolis"));
+        avltree.insert(new MyString("ZZZZZZYY"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("weird"));
+        avltree.insert(new MyString("sad"));
+        avltree.insert(new MyString("Acropolis"));
+        avltree.insert(new MyString("ZZZZZZYY"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("weird"));
+        avltree.insert(new MyString("sad"));
+        avltree.insert(new MyString("Acropolis"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("weird"));
+        avltree.insert(new MyString("sad"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("weird"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("Happ"));
+        avltree.insert(new MyString("Hap"));
+        avltree.insert(new MyString("Ha"));
+        avltree.insert(new MyString("H"));
+        avltree.insert(new MyString("Happyy"));
+        avltree.insert(new MyString("Happy"));
+        avltree.insert(new MyString("Hapy"));
+        avltree.insert(new MyString("Hay"));
+        avltree.insert(new MyString("Hy"));
+        avltree.PrintMostFrequent();
     }
     
     // Test program
@@ -312,6 +397,8 @@ public class AvlTree {
         for( int i = 1; i < NUMS; i++ )
              if( ((Integer)(t.find( new Integer( i ) ))).intValue( ) != i )
                  System.out.println( "Find error1!" );
+
+        frequencyTest();
     }
     
 

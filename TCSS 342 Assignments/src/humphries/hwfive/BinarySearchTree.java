@@ -1,3 +1,5 @@
+package humphries.hwfive;
+
 import java.lang.Comparable;
 
 // BinarySearchTree class
@@ -25,12 +27,11 @@ public class BinarySearchTree {
     private BinaryNode root;
 
 
+
     /**
      * Construct the tree.
      */
-    public BinarySearchTree( ) {
-        root = null;
-    }
+    public BinarySearchTree( ) { root = null;}
 
     /**
      * Insert into the tree; duplicates are ignored.
@@ -147,7 +148,8 @@ public class BinarySearchTree {
                 treeNode = treeNode.right;
                 direction = 'r';
             } else {
-                // Duplicate; do nothing
+                // Duplicate; increase frequency count
+                t.frequency++;
                 return t;
             }
         }

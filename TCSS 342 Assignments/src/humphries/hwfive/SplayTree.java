@@ -1,3 +1,5 @@
+package humphries.hwfive;
+
 import java.lang.Comparable;
 
 // SplayTree class
@@ -65,6 +67,7 @@ public class SplayTree {
                 root.right = nullNode;
                 root = newNode;
             } else {
+                newNode.frequency++;
                 return;
             }
         }
